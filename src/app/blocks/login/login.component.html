@@ -1,0 +1,29 @@
+<form
+    *ngIf="!user"
+    class="column column_center"
+    (submit)="submit()"
+    [formGroup]="formGroup">
+    <mat-form-field
+        class="mat-form-field"
+        *ngFor="let field of fields">
+        <input
+            matInput
+            [formControlName]="field"
+            [errorStateMatcher]="matcher"
+            [placeholder]="field">
+        <mat-error
+            *ngIf="formGroup.get(field)?.errors">
+            {{field | prettyError: formGroup.get(field)?.errors}}
+        </mat-error>
+    </mat-form-field>
+
+    <button
+        mat-raised-button
+        mat-button
+        type="submit">Submit</button>
+</form>
+
+<app-code
+    *ngIf="user"
+    [user]="user"
+    class="column column_center"></app-code>

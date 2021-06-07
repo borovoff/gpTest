@@ -1,0 +1,14 @@
+<mat-form-field class="mat-form-field">
+    <input
+        matInput
+        placeholder="Code"
+        [ngModel]="code"
+        (ngModelChange)="codeChange($event)">
+    <mat-hint *ngIf="millisecondsLeft >= 0">You can resend the code in {{millisecondsLeft | date:'mm:ss'}}</mat-hint>
+</mat-form-field>
+
+<button
+    *ngIf="millisecondsLeft < 0"
+    (click)="resend()"
+    mat-raised-button
+    mat-button>Resend</button>
