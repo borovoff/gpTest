@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core'
+import {Component, Input, OnDestroy, OnInit} from '@angular/core'
 import {AuthService} from '../../services/auth/auth.service'
 import {ActivatedRoute, Router} from '@angular/router'
 import {User} from '../../models/user'
@@ -8,7 +8,7 @@ import {User} from '../../models/user'
     templateUrl: './code.component.html',
     styleUrls: ['./code.component.sass']
 })
-export class CodeComponent implements OnInit {
+export class CodeComponent implements OnInit, OnDestroy {
     @Input() user?: User
     code = ''
     defaultValue = 1000 * 300
@@ -27,12 +27,15 @@ export class CodeComponent implements OnInit {
         if (value.length === 5 && this.user) {
             this.auth.user = this.user
             this.router.navigate([this.route.snapshot.queryParams['returnUrl'] || '/'])
-            clearInterval(this.intervalId)
         }
     }
 
     resend() {
         this.millisecondsLeft = this.defaultValue
+    }
+
+    ngOnDestroy() {
+        clearInterval(this.intervalId)
     }
 
 }
